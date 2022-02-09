@@ -1,0 +1,96 @@
+$(document).ready(function (){
+    $('[data-pagepi]').click(function (e){
+        e.preventDefault();
+        let data = $(this).data();
+        let sellerId = data.sellerid;
+        let page = data.pagepi;
+        $('.CipAjaxLink').removeAttr("style");
+        $('.ssopacity').css('display', 'block');
+        let load = $('.itemsPlayer');
+        load.slideUp(200)
+        $(this).css({
+            'pointer-events': 'none',
+            'cursor': 'default',
+            'text-decoration': 'none',
+            'color': 'black'
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax/buycharpageview.php",
+            data: {page: page, player_items: true, seller_id: sellerId},
+            success: function (response){
+                load.html(response).slideDown(200);
+            },
+            error: function (response){
+                showFrontendAlert("error", "Erro ao carregar items")
+            },
+            complete: function (response){
+                $('.ssopacity').css('display', 'none');
+            }
+        });
+    });
+    $('[data-pagepdp]').click(function (e){
+        e.preventDefault();
+        let data = $(this).data();
+        let sellerId = data.sellerid;
+        let page = data.pagepdp;
+        $('.ssopacityDepot').css('display', 'block');
+        $('.CipAjaxLinkDP').removeAttr("style");
+        let load = $('.loadDepotItems');
+        load.slideUp(200);
+        $(this).css({
+            'pointer-events': 'none',
+            'cursor': 'default',
+            'text-decoration': 'none',
+            'color': 'black'
+        });
+
+        $.ajax({
+            type: "POSt",
+            url: "ajax/buycharpageview.php",
+            data: {page: page, player_depot: true, seller_id: sellerId},
+            success: function (response){
+                load.html(response).slideDown(200);
+            },
+            error: function (response){
+                showFrontendAlert("error", "Erro ao carregar items")
+            },
+            complete: function (response){
+                $('.ssopacityDepot').css('display', 'none');
+            }
+        });
+    });
+
+    $('[data-pagepinb]').click(function (e){
+        e.preventDefault();
+        let data = $(this).data();
+        let sellerId = data.sellerid;
+        let page = data.pagepinb;
+        let load = $('.loadInboxItems');
+        $('.ssopacityInbox').css('display', 'block');
+        $('.CipAjaxLinkInbox').removeAttr("style");
+        load.slideUp(200);
+        $(this).css({
+            'pointer-events': 'none',
+            'cursor': 'default',
+            'text-decoration': 'none',
+            'color': 'black'
+        });
+
+        $.ajax({
+            type: "POSt",
+            url: "ajax/buycharpageview.php",
+            data: {page: page, player_inbox: true, seller_id: sellerId},
+            success: function (response){
+                $('.loadInboxItems').html(response).slideDown(200);
+            },
+            error: function (response){
+                showFrontendAlert("error", "Erro ao carregar items")
+            },
+            complete: function (response){
+                $('.ssopacityInbox').css('display', 'none');
+            }
+        });
+    });
+});
